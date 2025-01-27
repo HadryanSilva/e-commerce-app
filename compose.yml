@@ -1,0 +1,48 @@
+services:
+  postgres:
+    container_name: postgres
+    image: postgres:13-alpine
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: postgres
+    ports:
+        - "5432:5432"
+    volumes:
+        - postgres-data:/var/lib/postgresql/data
+        - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - app-network
+    restart: unless-stopped
+
+  mongo:
+    container_name: mongo
+    image: mongo:4.4
+    ports:
+        - "27017:27017"
+    volumes:
+        - mongo-data:/data/db
+    environment:
+        MONGO_INITDB_ROOT_USERNAME: root
+        MONGO_INITDB_ROOT_PASSWORD: root
+    networks:
+      - app-network
+    restart: unless-stopped
+
+  mail-dev:
+    container_name: maildev
+    image: maildev/maildev
+    ports:
+        - "1080:1080"
+        - "1025:1025"
+    networks:
+      - app-network
+    restart: unless-stopped
+
+networks:
+    app-network:
+        driver: bridge
+
+volumes:
+    postgres-data:
+    mongo-data:
