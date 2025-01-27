@@ -40,10 +40,11 @@ public class CustomerService {
         return customerMapper.customerToResponse(customerFound);
     }
 
-    public Customer save(CustomerRequest request) {
+    public CustomerResponse save(CustomerRequest request) {
         log.info("Saving customer {}", request.getFirstname());
         var customerToSave = customerMapper.requestToCustomer(request);
-        return repository.save(customerToSave);
+        var customerSaved = repository.save(customerToSave);
+        return customerMapper.customerToResponse(customerSaved);
     }
 
     public void update(CustomerRequest request, String id) {

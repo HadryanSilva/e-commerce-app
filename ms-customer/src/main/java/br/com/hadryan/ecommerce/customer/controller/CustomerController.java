@@ -34,9 +34,7 @@ public class CustomerController {
 
     @PostMapping
     public ResponseEntity<CustomerResponse> saveCustomer(@RequestBody @Valid CustomerRequest request) {
-        var customerToSave = mapper.requestToCustomer(request);
-        var customerSaved = service.save(customerToSave);
-        var response = mapper.customerToResponse(customerSaved);
+        var response = service.save(request);
         return ResponseEntity.created(URI.create("/customers/?id=" + response.getId())).body(response);
     }
 
