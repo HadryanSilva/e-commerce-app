@@ -32,6 +32,11 @@ public class CustomerController {
         return ResponseEntity.ok(service.findById(id));
     }
 
+    @GetMapping("/exists/{id}")
+    public ResponseEntity<Boolean> checkCustomerExists(@PathVariable String id) {
+        return ResponseEntity.ok(service.checkCustomerExists(id));
+    }
+
     @PostMapping
     public ResponseEntity<CustomerResponse> saveCustomer(@RequestBody @Valid CustomerRequest request) {
         var response = service.save(request);

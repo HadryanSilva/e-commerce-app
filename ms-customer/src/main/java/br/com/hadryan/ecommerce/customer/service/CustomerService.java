@@ -57,6 +57,10 @@ public class CustomerService {
 
     }
 
+    public Boolean checkCustomerExists(String id) {
+        return repository.existsById(id);
+    }
+
     private void validateFields(CustomerRequest request, Customer customer) {
         if (StringUtils.isNotBlank(request.getFirstname())) {
             customer.setFirstname(request.getFirstname());
