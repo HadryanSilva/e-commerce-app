@@ -1,0 +1,14 @@
+server:
+  port: 8092
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/postgres?currentSchema=order_db
+    username: postgres
+    password: postgres
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      database: postgresql
+      database-platform: org.hibernate.dialect.PostgreSQLDialect
+      ddl-auto: validate
+  show-sql: false
