@@ -52,7 +52,7 @@ public class ProductService {
         return productMapper.modelToResponse(productSaved);
     }
 
-    @Transactional
+    @Transactional(rollbackFor = {ProductStockException.class, ProductNotFoundException.class})
     public List<ProductPurchaseResponse> purchase(List<ProductPurchaseRequest> request) {
         var productIds = request.stream()
                 .map(ProductPurchaseRequest::getProductId)
