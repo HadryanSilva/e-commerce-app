@@ -1,5 +1,7 @@
 package br.com.hadryan.ecommerce.product.service;
 
+import br.com.hadryan.ecommerce.product.exception.ProductNotFoundException;
+import br.com.hadryan.ecommerce.product.exception.ProductStockException;
 import br.com.hadryan.ecommerce.product.mapper.ProductMapper;
 import br.com.hadryan.ecommerce.product.mapper.request.ProductPurchaseRequest;
 import br.com.hadryan.ecommerce.product.mapper.request.ProductRequest;
@@ -39,7 +41,7 @@ public class ProductService {
         log.info("Finding product by id: {}", id);
         return productRepository.findById(id)
                 .map(productMapper::modelToResponse)
-                .orElseThrow(() -> new RuntimeException("Product not found"));
+                .orElseThrow(() -> new ProductNotFoundException(String.format("Product with id:%s not found", id)));
     }
 
     public ProductResponse save(ProductRequest request) {
@@ -57,7 +59,7 @@ public class ProductService {
                 .toList();
         var products = productRepository.findAllByIdInOrderById(productIds);
         if (productIds.size() != products.size()) {
-            throw new RuntimeException("One or more products not found");
+            throw new ProductNotFoundException("One or more products not found");
         }
 
         var storedRequest = request.stream()
@@ -73,7 +75,7 @@ public class ProductService {
             var product = products.get(i);
             var productRequest = request.get(i);
             if (product.getAvailableQuantity() < productRequest.getQuantity()) {
-                throw new RuntimeException("Product " + product.getName() + " has insufficient quantity");
+                throw new ProductStockException(String.format("Product %s has insufficient stock", product.getName()));
             }
             product.setAvailableQuantity(product.getAvailableQuantity() - productRequest.getQuantity());
             log.info("Updating available stock for product: {}", product.getName());

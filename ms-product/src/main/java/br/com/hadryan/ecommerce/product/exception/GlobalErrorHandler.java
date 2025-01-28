@@ -1,4 +1,4 @@
-package br.com.hadryan.ecommerce.customer.exception;
+package br.com.hadryan.ecommerce.product.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,11 +13,19 @@ import java.util.Map;
 @ControllerAdvice
 public class GlobalErrorHandler {
 
-    @ExceptionHandler(CustomerNotFoundException.class)
-    public ResponseEntity<DefaultErrorMessage> handleCustomerNotFoundException(CustomerNotFoundException e) {
+    @ExceptionHandler(ProductNotFoundException.class)
+    public ResponseEntity<DefaultErrorMessage> handleProductNotFoundException(ProductNotFoundException e) {
         var response = new DefaultErrorMessage(HttpStatus.NOT_FOUND.value(), e.getMessage());
         return ResponseEntity
                 .status(HttpStatus.NOT_FOUND)
+                .body(response);
+    }
+
+    @ExceptionHandler(ProductStockException.class)
+    public ResponseEntity<DefaultErrorMessage> handleProductStockException(ProductStockException e) {
+        var response = new DefaultErrorMessage(HttpStatus.BAD_REQUEST.value(), e.getMessage());
+        return ResponseEntity
+                .status(HttpStatus.BAD_REQUEST)
                 .body(response);
     }
 
