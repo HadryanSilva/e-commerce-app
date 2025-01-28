@@ -1,6 +1,6 @@
+server:
+  port: 8090
 spring:
-  server:
-    port: 8090
   data:
     mongodb:
       database: customer_db
