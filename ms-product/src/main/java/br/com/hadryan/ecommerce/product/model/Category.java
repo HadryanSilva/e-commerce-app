@@ -1,24 +1,22 @@
 package br.com.hadryan.ecommerce.product.model;
 
-import jakarta.persistence.*;
-import lombok.*;
+import lombok.Getter;
 
-import java.util.List;
-
-@AllArgsConstructor
-@NoArgsConstructor
-@Builder
 @Getter
-@Setter
-@Entity
-public class Category {
+public enum Category {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    private String name;
-    private String description;
-    @OneToMany(mappedBy = "category", cascade = CascadeType.REMOVE)
-    private List<Product> products;
+    CLOTHING(1, "Clothing", "Clothing category"),
+    ELECTRONICS(2, "Electronics", "Electronics category"),
+    BOOKS(3, "Books", "Books category");
+
+    private final int id;
+    private final String name;
+    private final String description;
+
+    Category(int id, String name, String description) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+    }
 
 }

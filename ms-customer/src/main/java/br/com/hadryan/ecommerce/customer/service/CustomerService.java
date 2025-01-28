@@ -13,6 +13,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Slf4j
@@ -25,19 +26,19 @@ public class CustomerService {
     public List<CustomerResponse> findAll(int page, int size) {
         log.info("Finding all customers");
         return repository.findAll(PageRequest.of(page, size))
-                .map(customerMapper::customerToResponse)
                 .stream()
-                .toList();
+                .map(customerMapper::customerToResponse)
+                .collect(Collectors.toList());
     }
 
     public CustomerResponse findById(String id) {
         log.info("Finding customer by id {}", id);
-        var customerFound = repository.findById(id).orElseThrow(() -> {
+        return repository.findById(id)
+                .map(customerMapper::customerToResponse)
+                .orElseThrow(() -> {
             log.error("Customer not found");
             return new CustomerNotFoundException("Customer with id " + id + " not found");
         });
-
-        return customerMapper.customerToResponse(customerFound);
     }
 
     public CustomerResponse save(CustomerRequest request) {

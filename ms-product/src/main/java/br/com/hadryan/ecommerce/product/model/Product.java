@@ -15,15 +15,15 @@ import java.math.BigDecimal;
 public class Product {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "product_generator")
+    @SequenceGenerator(name = "product_generator", sequenceName = "product_id_seq", allocationSize = 1)
     private Long id;
     private String name;
     private String description;
     @Min(0)
     private Integer availableQuantity;
     private BigDecimal price;
-    @ManyToOne
-    @JoinColumn(name = "category_id")
+    @Enumerated(EnumType.STRING)
     private Category category;
 
 }

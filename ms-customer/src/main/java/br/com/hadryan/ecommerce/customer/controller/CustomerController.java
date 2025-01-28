@@ -15,7 +15,7 @@ import java.util.List;
 @Validated
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/customers")
+@RequestMapping("/api/v1/customer")
 public class CustomerController {
 
     private final CustomerService service;
