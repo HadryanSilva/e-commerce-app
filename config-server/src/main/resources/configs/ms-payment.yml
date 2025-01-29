@@ -1,0 +1,19 @@
+server:
+  port: 8093
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/postgres?currentSchema=payment_db
+    username: postgres
+    password: postgres
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      database: postgresql
+      database-platform: org.hibernate.dialect.PostgreSQLDialect
+      ddl-auto: create
+  show-sql: false
+  kafka:
+    producer:
+      bootstrap-servers: localhost:9092
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
