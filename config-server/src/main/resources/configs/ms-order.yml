@@ -10,5 +10,11 @@ spring:
     hibernate:
       database: postgresql
       database-platform: org.hibernate.dialect.PostgreSQLDialect
-      ddl-auto: validate
+      ddl-auto: create
   show-sql: false
+
+application:
+  config:
+    customer-url: http://localhost:8091/api/v1/customer
+    product-url: http://localhost:8093/api/v1/product
+    payment-url: http://localhost:8094/api/v1/payment
