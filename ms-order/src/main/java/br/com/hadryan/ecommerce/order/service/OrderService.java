@@ -1,6 +1,8 @@
 package br.com.hadryan.ecommerce.order.service;
 
 import br.com.hadryan.ecommerce.order.client.CustomerClient;
+import br.com.hadryan.ecommerce.order.client.PaymentClient;
+import br.com.hadryan.ecommerce.order.client.PaymentRequest;
 import br.com.hadryan.ecommerce.order.client.ProductClient;
 import br.com.hadryan.ecommerce.order.exception.BusinessException;
 import br.com.hadryan.ecommerce.order.kafka.OrderConfirmation;
@@ -30,6 +32,7 @@ public class OrderService {
     private final ProductClient productClient;
     private final OrderLineService orderLineService;
     private final OrderProducer orderProducer;
+    private final PaymentClient paymentClient;
 
     public List<OrderResponse> findAll(int page, int size) {
         return repository.findAll(PageRequest.of(page, size))
@@ -53,7 +56,15 @@ public class OrderService {
         var order = repository.save(orderMapper.requestToOrder(request));
         saveOrderLines(request);
 
-        //TODO: Start payment process
+        paymentClient.requestOrderPayment(
+                new PaymentRequest(
+                        request.getAmount(),
+                        request.getPaymentMethod(),
+                        request.getId(),
+                        order.getReference(),
+                        customer
+                )
+        );
 
         orderProducer.sendOrderConfirmation(
                 new OrderConfirmation(
