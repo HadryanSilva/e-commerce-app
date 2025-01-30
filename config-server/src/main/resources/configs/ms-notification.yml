@@ -33,4 +33,4 @@ spring:
       value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
       properties:
         spring.json.trusted.packages: br.com.hadryan.ecommerce.payment.kafka,br.com.hadryan.ecommerce.order.kafka
-        spring.json.type.mapping: orderConfirmation:br.com.hadryan.ecommerce.order.kafka.OrderConfirmation,paymentConfirmation:br.com.hadryan.ecommerce.payment.kafka.PaymentNotificationRequest
+        spring.json.type.mapping: orderConfirmation:br.com.hadryan.ecommerce.notification.kafka.order.OrderConfirmation,paymentConfirmation:br.com.hadryan.ecommerce.notification.kafka.payment.PaymentConfirmation
