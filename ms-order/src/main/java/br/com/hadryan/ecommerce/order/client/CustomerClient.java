@@ -13,7 +13,7 @@ import java.util.Optional;
 )
 public interface CustomerClient {
 
-    @GetMapping("/api/v1/customer")
+    @GetMapping
     Optional<CustomerResponse> findCustomerById(@RequestParam("id") String customerId);
 
 }

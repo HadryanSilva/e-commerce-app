@@ -12,6 +12,7 @@ import br.com.hadryan.ecommerce.order.mapper.request.OrderLineRequest;
 import br.com.hadryan.ecommerce.order.mapper.request.OrderRequest;
 import br.com.hadryan.ecommerce.order.mapper.request.PurchaseRequest;
 import br.com.hadryan.ecommerce.order.mapper.response.OrderResponse;
+import br.com.hadryan.ecommerce.order.model.Order;
 import br.com.hadryan.ecommerce.order.repository.OrderRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -54,7 +55,7 @@ public class OrderService {
                         new BusinessException(String.format("Customer with id %s not found", request.getCustomerId())));
         var purchases = productClient.purchaseProducts(request.getProducts());
         var order = repository.save(orderMapper.requestToOrder(request));
-        saveOrderLines(request);
+        saveOrderLines(request, order);
 
         paymentClient.requestOrderPayment(
                 new PaymentRequest(
@@ -79,10 +80,11 @@ public class OrderService {
         return orderMapper.orderToResponse(order);
     }
 
-    private void saveOrderLines(OrderRequest request) {
+    private void saveOrderLines(OrderRequest request, Order order) {
         for (PurchaseRequest purchaseRequest : request.getProducts()) {
             orderLineService.saveOrderLine(
                     OrderLineRequest.builder()
+                            .orderId(order.getId())
                             .productId(purchaseRequest.getProductId())
                             .quantity(purchaseRequest.getQuantity())
                             .build()

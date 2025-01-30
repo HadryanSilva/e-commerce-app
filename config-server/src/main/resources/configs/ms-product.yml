@@ -10,12 +10,5 @@ spring:
     hibernate:
       database: postgresql
       database-platform: org.hibernate.dialect.PostgreSQLDialect
-      ddl-auto: validate
-    flyway:
-      enabled: true
-      baseline-on-migrate: true
-      baseline-version: 0
-      baseline-description: "init"
-      user: ${spring.datasource.username}
-      password: ${spring.datasource.password}
+      ddl-auto: create
     show-sql: false

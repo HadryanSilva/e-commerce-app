@@ -13,7 +13,7 @@ import java.util.List;
 
 @Getter
 @Setter
-@Entity
+@Entity(name = "orders")
 @EntityListeners(AuditingEntityListener.class)
 public class Order {
 
@@ -24,7 +24,7 @@ public class Order {
     private BigDecimal amount;
     private PaymentMethod paymentMethod;
     private String customerId;
-    @OneToMany(mappedBy = "order")
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
     private List<OrderLine> orderLines;
     @CreatedDate
     @Column(updatable = false, nullable = false)
