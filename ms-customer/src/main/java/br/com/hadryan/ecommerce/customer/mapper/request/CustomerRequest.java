@@ -16,7 +16,7 @@ public class CustomerRequest {
     @NotBlank(message = "Lastname is required")
     private String lastname;
     @NotBlank(message = "Email is required")
-    @Email(message = "Invalid email", regexp = "^[A-Za-z0-9+_.-]+@(.+)$")
+    @Email(message = "Invalid email", regexp = "^([a-zA-Z0-9._%+-]+)(@)?([a-zA-Z0-9._%+-]+)$")
     private String email;
     @NotNull(message = "Address is required")
     private Address address;

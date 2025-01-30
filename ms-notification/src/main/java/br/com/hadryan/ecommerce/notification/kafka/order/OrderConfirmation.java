@@ -1,5 +1,7 @@
 package br.com.hadryan.ecommerce.notification.kafka.order;
 
+import br.com.hadryan.ecommerce.notification.kafka.PaymentMethod;
+
 import java.math.BigDecimal;
 import java.util.List;
 

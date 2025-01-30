@@ -1,7 +1,7 @@
 package br.com.hadryan.ecommerce.notification.model;
 
 import br.com.hadryan.ecommerce.notification.kafka.order.OrderConfirmation;
-import br.com.hadryan.ecommerce.notification.kafka.PaymentConfirmation;
+import br.com.hadryan.ecommerce.notification.kafka.payment.PaymentConfirmation;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;

@@ -1,4 +1,4 @@
-package br.com.hadryan.ecommerce.notification.kafka.order;
+package br.com.hadryan.ecommerce.notification.kafka;
 
 public enum PaymentMethod {
 
