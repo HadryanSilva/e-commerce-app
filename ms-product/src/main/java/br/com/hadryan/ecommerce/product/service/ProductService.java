@@ -7,7 +7,6 @@ import br.com.hadryan.ecommerce.product.mapper.request.ProductPurchaseRequest;
 import br.com.hadryan.ecommerce.product.mapper.request.ProductRequest;
 import br.com.hadryan.ecommerce.product.mapper.response.ProductPurchaseResponse;
 import br.com.hadryan.ecommerce.product.mapper.response.ProductResponse;
-import br.com.hadryan.ecommerce.product.model.Category;
 import br.com.hadryan.ecommerce.product.model.Product;
 import br.com.hadryan.ecommerce.product.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
@@ -47,7 +46,7 @@ public class ProductService {
     public ProductResponse save(ProductRequest request) {
         log.info("Saving product: {}", request.getName());
         var productToSave = productMapper.requestToModel(request);
-        productToSave.setCategory(Category.valueOf(request.getCategory()));
+        productToSave.setCategory(request.getCategory());
         var productSaved = productRepository.save(productToSave);
         return productMapper.modelToResponse(productSaved);
     }

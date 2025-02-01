@@ -1,5 +1,6 @@
 package br.com.hadryan.ecommerce.product.mapper.request;
 
+import br.com.hadryan.ecommerce.product.model.Category;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
@@ -20,6 +21,6 @@ public class ProductRequest {
     @Positive(message = "Price should be positive")
     private BigDecimal price;
     @NotNull(message = "Category is required")
-    private String category;
+    private Category category;
 
 }

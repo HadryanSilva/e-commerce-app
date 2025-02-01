@@ -69,6 +69,15 @@ services:
       - app-network
     restart: unless-stopped
 
+  zipkin:
+    container_name: zipkin
+    image: openzipkin/zipkin
+    ports:
+        - "9411:9411"
+    networks:
+      - app-network
+    restart: unless-stopped
+
 networks:
     app-network:
         driver: bridge

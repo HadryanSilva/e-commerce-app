@@ -6,24 +6,25 @@ spring:
       discovery:
         locator:
           enabled: true
+          lower-case-service-id: true
       routes:
         - id: ms-customer
-          uri: lb:http://CUSTOMER-SERVICE
+          uri: lb:http://MS-CUSTOMER
           predicates:
             - Path=/api/v1/customer/**
         - id: ms-order
-          uri: lb:http://ORDER-SERVICE
+          uri: lb:http://MS-ORDER
           predicates:
             - Path=/api/v1/order/**
         - id: ms-order
-          uri: lb:http://ORDER-SERVICE
+          uri: lb:http://MS-ORDER
           predicates:
             - Path=/api/v1/order-lines/**
         - id: ms-product
-          uri: lb:http://PRODUCT-SERVICE
+          uri: lb:http://MS-PRODUCT
           predicates:
             - Path=/api/v1/product/**
         - id: ms-payment
-          uri: lb:http://PAYMENT-SERVICE
+          uri: lb:http://MS-PAYMENT
           predicates:
             - Path=/api/v1/payment/**
