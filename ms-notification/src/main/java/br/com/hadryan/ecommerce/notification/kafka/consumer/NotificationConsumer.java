@@ -40,7 +40,7 @@ public class NotificationConsumer {
                 customerName,
                 message.totalAmount(),
                 message.orderReference(),
-                message.products()
+                message.purchases()
         );
     }
 
