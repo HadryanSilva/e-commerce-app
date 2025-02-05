@@ -26,10 +26,11 @@ public class Order {
     private String customerId;
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
     private List<OrderLine> orderLines;
+    @Enumerated(EnumType.STRING)
+    private OrderStatus status;
     @CreatedDate
     @Column(updatable = false, nullable = false)
     private LocalDateTime createdDate;
-
     @LastModifiedDate
     @Column(insertable = false)
     private LocalDateTime lastModifiedDate;
