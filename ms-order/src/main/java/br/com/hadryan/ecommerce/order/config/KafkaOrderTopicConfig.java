@@ -13,4 +13,11 @@ public class KafkaOrderTopicConfig {
         return TopicBuilder.name("order-topic")
                 .build();
     }
+
+    @Bean
+    public NewTopic orderStatusTopic() {
+        return TopicBuilder.name("order-status-topic")
+                .build();
+    }
+
 }

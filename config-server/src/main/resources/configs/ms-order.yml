@@ -19,6 +19,15 @@ spring:
       value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
       properties:
         spring.json.type.mapping: orderConfirmation:br.com.hadryan.ecommerce.order.kafka.OrderConfirmation
+    consumer:
+      bootstrap-servers: localhost:9092
+      group-id: orderStatusGroup
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      properties:
+          spring.json.trusted.packages: br.com.hadryan.ecommerce.order.kafka, br.com.hadryan.ecommerce.payment.kafka
+          spring.json.type.mapping: orderStatusRequest:br.com.hadryan.ecommerce.order.kafka.OrderStatusRequest
 
 application:
   config:

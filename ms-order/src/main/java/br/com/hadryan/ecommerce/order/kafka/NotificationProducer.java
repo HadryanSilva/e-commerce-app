@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 @Slf4j
 @Service
-public class OrderProducer {
+public class NotificationProducer {
 
     private final KafkaTemplate<String, OrderConfirmation> template;
 

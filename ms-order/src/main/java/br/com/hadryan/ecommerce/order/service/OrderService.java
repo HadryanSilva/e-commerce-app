@@ -5,8 +5,8 @@ import br.com.hadryan.ecommerce.order.client.PaymentClient;
 import br.com.hadryan.ecommerce.order.client.PaymentRequest;
 import br.com.hadryan.ecommerce.order.client.ProductClient;
 import br.com.hadryan.ecommerce.order.exception.BusinessException;
+import br.com.hadryan.ecommerce.order.kafka.NotificationProducer;
 import br.com.hadryan.ecommerce.order.kafka.OrderConfirmation;
-import br.com.hadryan.ecommerce.order.kafka.OrderProducer;
 import br.com.hadryan.ecommerce.order.mapper.OrderMapper;
 import br.com.hadryan.ecommerce.order.mapper.request.OrderLineRequest;
 import br.com.hadryan.ecommerce.order.mapper.request.OrderRequest;
@@ -32,7 +32,7 @@ public class OrderService {
     private final CustomerClient customerClient;
     private final ProductClient productClient;
     private final OrderLineService orderLineService;
-    private final OrderProducer orderProducer;
+    private final NotificationProducer notificationProducer;
     private final PaymentClient paymentClient;
 
     public List<OrderResponse> findAll(int page, int size) {
@@ -61,13 +61,13 @@ public class OrderService {
                 new PaymentRequest(
                         request.getAmount(),
                         request.getPaymentMethod(),
-                        request.getId(),
+                        order.getId(),
                         order.getReference(),
                         customer
                 )
         );
 
-        orderProducer.sendOrderConfirmation(
+        notificationProducer.sendOrderConfirmation(
                 new OrderConfirmation(
                         request.getReference(),
                         request.getAmount(),

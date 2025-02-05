@@ -1,7 +1,6 @@
 package br.com.hadryan.ecommerce.payment.service;
 
-import br.com.hadryan.ecommerce.payment.kafka.NotificationProducer;
-import br.com.hadryan.ecommerce.payment.kafka.PaymentNotificationRequest;
+import br.com.hadryan.ecommerce.payment.kafka.*;
 import br.com.hadryan.ecommerce.payment.mapper.PaymentMapper;
 import br.com.hadryan.ecommerce.payment.mapper.request.PaymentRequest;
 import br.com.hadryan.ecommerce.payment.mapper.response.PaymentResponse;
@@ -17,6 +16,7 @@ public class PaymentService {
 
     private final PaymentRepository repository;
     private final PaymentMapper mapper;
+    private final OrderProducer orderProducer;
     private final NotificationProducer notificationProducer;
 
     public PaymentResponse createPayment(PaymentRequest request) {
@@ -33,6 +33,14 @@ public class PaymentService {
                         request.getCustomer().getFirstname(),
                         request.getCustomer().getLastname(),
                         request.getCustomer().getEmail()
+                )
+        );
+        log.info("Sending order status update");
+        orderProducer.sendOrderStatusUpdate(
+                new OrderStatusRequest(
+                        request.getOrderId(),
+                        request.getOrderReference(),
+                        OrderStatus.PAYMENT_CONFIRMED
                 )
         );
         return mapper.modelToResponse(savedPayment);
